@@ -26,16 +26,16 @@ public class IndexController {
 	}
 
 	// 스프링시큐리티의 기본 login uri로 맵핑됨!
-	@GetMapping("/login")
+	@GetMapping("/loginForm")
 	public String login() {
-		return "login";
+		return "loginForm";
 	}
 
-	@GetMapping("/join")
+	@GetMapping("/joinForm")
 	public String join() {
-		return "join";
+		return "joinForm";
 	}
-	@GetMapping("/joinProc")
+	@GetMapping("/join")
 	public @ResponseBody String loginProc() {
 		return "회원가입 성공";
 	}

@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest().permitAll() // 그외 uri는 전부 권한 줌
 				.and()
 				.formLogin()
-				.loginPage("/login");
+				.loginPage("/loginForm");
 
 
 
