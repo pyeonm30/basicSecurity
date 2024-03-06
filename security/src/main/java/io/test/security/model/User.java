@@ -6,10 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 // ORM - Object Relation Mapping
@@ -25,7 +22,8 @@ public class User {
 	private String username;
 	private String password;
 	private String email;
-	private String role; //ROLE_USER, ROLE_ADMIN
+	@Enumerated(EnumType.STRING)
+	private RoleUser role; //ROLE_USER, ROLE_ADMIN
 	@CreationTimestamp
 	private Timestamp createDate;
 }

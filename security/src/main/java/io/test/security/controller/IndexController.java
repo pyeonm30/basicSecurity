@@ -1,12 +1,24 @@
 package io.test.security.controller;
 
+import io.test.security.model.RoleUser;
+import io.test.security.model.User;
+import io.test.security.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
 public class IndexController {
+
+	@Autowired
+	UserRepository userRepository;
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@GetMapping({ "", "/" })
 	public @ResponseBody String index() {
@@ -35,9 +47,18 @@ public class IndexController {
 	public String join() {
 		return "joinForm";
 	}
-	@GetMapping("/join")
-	public @ResponseBody String loginProc() {
-		return "회원가입 성공";
+	@PostMapping("/join")
+	public String join(User user) {
+
+		user.setRole(RoleUser.USER);
+		System.out.println("user = " + user);
+		String initPassword = user.getPassword();
+		String encPassword = bCryptPasswordEncoder.encode(initPassword);
+		user.setPassword(encPassword);
+
+		User u = userRepository.save(user);  // 이렇게 되면 시큐리티로 로그인 할수없음 => 패스워드 암호화 필수
+		System.out.println("u = " + u);
+		return "redirect:/loginForm";
 	}
 
 }
