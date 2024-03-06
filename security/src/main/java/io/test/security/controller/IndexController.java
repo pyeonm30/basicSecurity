@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class IndexController {
 
 	@GetMapping({ "", "/" })
-	public @ResponseBody String index() {
-		return "인덱스 페이지입니다.";
+	public String index() {
+		return "index";
 	}
+//	public @ResponseBody String index() {
+//		return "인덱스 페이지입니다.";
+//	}
 	@GetMapping("/user")
 	public @ResponseBody String user() {
 		return "user";
@@ -27,12 +30,12 @@ public class IndexController {
 
 	// 스프링시큐리티의 기본 login uri로 맵핑됨!
 	@GetMapping("/login")
-	public String login() {
+	public  @ResponseBody  String login() {
 		return "login";
 	}
 
 	@GetMapping("/join")
-	public String join() {
+	public @ResponseBody String join() {
 		return "join";
 	}
 	@GetMapping("/joinProc")
