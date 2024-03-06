@@ -37,7 +37,6 @@ public class PrincipalDetailsService implements UserDetailsService{
 
 		String role = user.getRole().toString();
 		GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_"+role);
-
 		return new org.springframework.security.core.userdetails.User(
 				String.valueOf(user.getUsername()),
 				user.getPassword(),
