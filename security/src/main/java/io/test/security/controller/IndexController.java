@@ -56,7 +56,7 @@ public class IndexController {
 	public String join(User user , String roleType) {
 		System.out.println("roleType = " + roleType);
 		System.out.println("user = " + user);
-		user.setRole(RoleUser.valueOf(roleType.toUpperCase()));
+		user.setRole(RoleUser.valueOf(roleType));
 		String initPassword = user.getPassword();
 		String encPassword = bCryptPasswordEncoder.encode(initPassword);
 		user.setPassword(encPassword);
