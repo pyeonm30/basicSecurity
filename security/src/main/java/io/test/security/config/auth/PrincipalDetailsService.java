@@ -27,21 +27,12 @@ public class PrincipalDetailsService implements UserDetailsService{
 		if(user == null) {
 			return null;
 		}else {
-			return createUserDetails(user);
+			return new PrincipalDetails(user);  // 이 함수 종료할때 @AuthenticationProncpal 어노테이션의 객체가 만들어진다
 		}
 		
 	}
 
 
-	private UserDetails createUserDetails(User user) {
 
-		String role = user.getRole().toString();
-		GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_"+role);
-		return new org.springframework.security.core.userdetails.User(
-				String.valueOf(user.getUsername()),
-				user.getPassword(),
-				Collections.singleton(grantedAuthority)
-		);
-	}
 
 }

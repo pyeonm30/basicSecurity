@@ -3,19 +3,29 @@ package io.test.security.config.auth;
 import io.test.security.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
 // Authentication 객체에 저장할 수 있는 유일한 타입
-public class PrincipalDetails implements UserDetails{
-
+public class PrincipalDetails implements UserDetails , OAuth2User {
+	private static final long serialVersionUID = 1L;
 	private User user;
+
+	// OAuth2User 로 로그인하면  attributes 정보 받을 것이다
+	private Map<String, Object> attributes;
 
 	// 일반 시큐리티 로그인시 사용
 	public PrincipalDetails(User user) {
 		this.user = user;
+	}
+
+	// OAuth2.0 로그인시 사용
+	public PrincipalDetails(User user, Map<String, Object> attributes) {
+		this.user = user;  // attributes 정보를 토대로 우리 서버 user 정보 저장
+		this.attributes = attributes;
 	}
 
 	public User getUser() {
@@ -70,6 +80,18 @@ public class PrincipalDetails implements UserDetails{
 		// 현재시간 -  로그인시간 이런 것들..
 
 		return true;
+	}
+
+	// 리소스 서버로 부터 받는 회원정보
+	@Override
+	public Map<String, Object> getAttributes() {
+		return attributes;
+	}
+
+	// User의 PrimaryKey
+	@Override
+	public String getName() {
+		return user.getId()+"";
 	}
 	
 }

@@ -10,11 +10,12 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 // ORM - Object Relation Mapping
-@Builder
+
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class User {
 	@Id // primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +25,11 @@ public class User {
 	private String email;
 	@Enumerated(EnumType.STRING)
 	private RoleUser role; //ROLE_USER, ROLE_ADMIN
+
+	// OAuth를 위해 구성한 추가 필드 2개
+	private String provider;
+	private String providerId;
+
 	@CreationTimestamp
 	private Timestamp createDate;
 }

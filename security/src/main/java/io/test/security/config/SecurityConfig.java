@@ -1,5 +1,6 @@
 package io.test.security.config;
 
+import io.test.security.config.oauth.PrincipalOauth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
                         // secured 어노테이셔 활성화 , preAuthorize,postAuthorize 활성화
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Autowired
+	private PrincipalOauth2UserService principalOauth2UserService;
 
 	@Bean
 	public BCryptPasswordEncoder encodePwd() {
@@ -32,9 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.formLogin()
 				.loginPage("/loginForm")
 				.loginProcessingUrl("/login") // 시큐리티가 대신 로그인 프로세스 진행
-				.defaultSuccessUrl("/");
-
-
+				.defaultSuccessUrl("/")
+				.and()
+				.oauth2Login()
+				.loginPage("/loginForm")
+				.userInfoEndpoint()
+				.userService(principalOauth2UserService);
 
 	}
 
