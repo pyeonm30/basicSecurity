@@ -6,10 +6,7 @@ import io.test.security.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -48,10 +45,10 @@ public class IndexController {
 		return "joinForm";
 	}
 	@PostMapping("/join")
-	public String join(User user) {
-
-		user.setRole(RoleUser.USER);
+	public String join(User user , String roleType) {
+		System.out.println("roleType = " + roleType);
 		System.out.println("user = " + user);
+		user.setRole(RoleUser.valueOf(roleType.toUpperCase()));
 		String initPassword = user.getPassword();
 		String encPassword = bCryptPasswordEncoder.encode(initPassword);
 		user.setPassword(encPassword);
